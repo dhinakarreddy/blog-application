@@ -2,6 +2,8 @@ package com.springboot.blog.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +30,7 @@ public class CommentController {
 
 	@PostMapping("/posts/{postId}/comments")
 	public ResponseEntity<CommentDto> createComment(@PathVariable(value = "postId") Long postId,
-			@RequestBody CommentDto comment) {
+			@Valid @RequestBody CommentDto comment) {
 		return new ResponseEntity<>(commentService.createComment(postId, comment), HttpStatus.CREATED);
 	}
 
@@ -45,10 +47,10 @@ public class CommentController {
 
 	@PutMapping("/posts/{postId}/comments/{commentId}")
 	public ResponseEntity<CommentDto> updateCommentById(@PathVariable(value = "postId") Long postId,
-			@PathVariable(value = "commentId") Long commentId, @RequestBody CommentDto update) {
+			@PathVariable(value = "commentId") Long commentId, @Valid @RequestBody CommentDto update) {
 		return new ResponseEntity<>(commentService.updateCommentById(postId, commentId, update), HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/posts/{postId}/comments/{commentId}")
 	public ResponseEntity<String> deleteCommentById(@PathVariable(value = "postId") Long postId,
 			@PathVariable(value = "commentId") Long commentId) {

@@ -1,5 +1,7 @@
 package com.springboot.blog.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,8 +33,9 @@ public class PostController {
 		this.postService = postService;
 	}
 
+	// @Valid validates the request json with respect to the annotations on dto class
 	@PostMapping
-	public ResponseEntity<PostDto> create(@RequestBody PostDto postDto) {
+	public ResponseEntity<PostDto> create(@Valid @RequestBody PostDto postDto) {
 		return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
 	}
 
@@ -58,7 +61,7 @@ public class PostController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<PostDto> update(@RequestBody PostDto postDto, @PathVariable(name = "id") Long id) {
+	public ResponseEntity<PostDto> update(@Valid @RequestBody PostDto postDto, @PathVariable(name = "id") Long id) {
 		return new ResponseEntity<>(postService.updatePost(id, postDto), HttpStatus.OK);
 	}
 
