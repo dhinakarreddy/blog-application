@@ -3,6 +3,7 @@ package com.springboot.blog.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,25 @@ public class CommentServiceImpl implements CommentService {
 
 	private PostRepository postRepo;
 	private CommentRepository commentRepo;
+	private ModelMapper mapper;
 
-	public CommentServiceImpl(PostRepository postRepo, CommentRepository commentRepo) {
+	public CommentServiceImpl(PostRepository postRepo, CommentRepository commentRepo, ModelMapper mapper) {
 		this.postRepo = postRepo;
 		this.commentRepo = commentRepo;
+		this.mapper = mapper;
+	}
+
+	private Comment mapToComment(CommentDto dto) {
+		/* Comment comment = new Comment(dto.getId(), dto.getName(), dto.getEmail(), dto.getBody(), null);
+		return comment; */
+		return mapper.map(dto, Comment.class);
+	}
+
+	private CommentDto mapToCommentDto(Comment comment) {
+		/* CommentDto dto = new CommentDto(comment.getId(), comment.getName(), comment.getEmail(), comment.getBody(),
+				comment.getPost().getId());
+		return dto; */
+		return mapper.map(comment, CommentDto.class);
 	}
 
 	@Override
@@ -38,17 +54,6 @@ public class CommentServiceImpl implements CommentService {
 		CommentDto response = mapToCommentDto(inserted);
 
 		return response;
-	}
-
-	public Comment mapToComment(CommentDto dto) {
-		Comment comment = new Comment(dto.getId(), dto.getName(), dto.getEmail(), dto.getBody(), null);
-		return comment;
-	}
-
-	public CommentDto mapToCommentDto(Comment comment) {
-		CommentDto dto = new CommentDto(comment.getId(), comment.getName(), comment.getEmail(), comment.getBody(),
-				comment.getPost().getId());
-		return dto;
 	}
 
 	@Override
