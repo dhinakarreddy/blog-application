@@ -14,10 +14,13 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+// @Data needed to replace this to avoid model mapper issues with toString method
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
