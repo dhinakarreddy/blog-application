@@ -2,23 +2,28 @@ package com.springboot.blog.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class BlogApiException extends RuntimeException {
+public class BlogAPIException extends RuntimeException {
 
-	private HttpStatus httpStatus;
-	private String message;
+    private HttpStatus status;
+    private String message;
 
-	public BlogApiException(HttpStatus httpStatus, String message) {
-		super(message);
-		this.httpStatus = httpStatus;
-		this.message = message;
-	}
+    public BlogAPIException(HttpStatus status, String message) {
+        this.status = status;
+        this.message = message;
+    }
 
-	public HttpStatus getHttpStatus() {
-		return httpStatus;
-	}
+    public BlogAPIException(String message, HttpStatus status, String message1) {
+        super(message);
+        this.status = status;
+        this.message = message1;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public HttpStatus getStatus() {
+        return status;
+    }
 
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }
